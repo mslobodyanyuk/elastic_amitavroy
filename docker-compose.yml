@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  web:
+    container_name: ${APP_NAME}_web
+    build:
+      context: ./docker/web
+    ports:
+      - 9000:80
+    volumes:
+      - ./:/var/www/app
+    depends_on:
+      - db
+  db:
+    container_name: ${APP_NAME}_db
+    image: mysql:5.7
+    ports:
+      - 4306:3306
+    restart: always
+    volumes:
+      - ./mysqldata:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=elastic_amitavroy
+      - MYSQL_USER=root
+  search:
+    container_name: ${APP_NAME}_search
+    image: elasticsearch:6.8.13
+    ports:
+      - 6200:9200 
