@@ -136,6 +136,7 @@ Useful commands for Ubuntu before using Docker & Elasticsearch.
 <https://losst.ru/ochistka-sistemy-ubuntu>
 
 1:
+
 	sudo apt-get autoclean
 	
 		It is recommended to run this command periodically, cleaning the system of packages that it no longer needs.
@@ -150,6 +151,7 @@ Useful commands for Ubuntu before using Docker & Elasticsearch.
 
 		Clearing the cache and/or `/var/cache/apt/archives/`.
 4:		
+	
 	sudo /usr/local/bin/remove_old_snaps.sh
 	
 - IF you create `remove_old_snaps.sh` before, like: 
@@ -185,10 +187,13 @@ done
 
 - ALLOCATE MEMORY:
 
-	free -m
-	sudo /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
-	sudo /sbin/mkswap /var/swap.1
-	sudo /sbin/swapon /var/swap.1
+	`free -m`
+	
+	`sudo /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024`
+	
+	`sudo /sbin/mkswap /var/swap.1`
+	
+	`sudo /sbin/swapon /var/swap.1`
 
 Error: 
 	
@@ -403,6 +408,8 @@ $this->call(UsersTableSeeder::class);
 	
 [(8:10)]( https://youtu.be/PIs0ZeiFTfw?list=PLkZU2rKh1mT_AdjEO0kMTAiNqRSbMW2D1&t=490 )
 
+_Every time the database is filled, the Faker class randomly generates data. - Insert your substring from the database( - instead of "Alberta" ) for search:_
+
 `routes/web.php`:
 
 ```php
@@ -417,8 +424,6 @@ Route::get('/users', function(){
 //$user = User::all();
 	
 User::reindex();
-
-_Every time the database is filled, the Faker class randomly generates data. - Insert your substring from the database( - instead of "Alberta" ) for search:_
 
 $user = User::search('Alberta');	//id: 10
 	
