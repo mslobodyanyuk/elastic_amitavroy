@@ -42,6 +42,8 @@ _- IF you DO NOT need to rebuild the image, then use the command WITHOUT the "--
 
 Create a database in phpMyAdmin named, for example, elastic_amitavroy -> choose encoding - utf8mb4_general_ci.
   
+	php artisan key:generate
+  
 `.env`:
 
 ```
@@ -339,6 +341,10 @@ _"proc_open(): fork failed - Cannot allocate memory"_
 ---
 
 [02 Setting up docker web container to run Laravel]( https://www.youtube.com/watch?v=MA-9FdT4Pho&list=PLkZU2rKh1mT_AdjEO0kMTAiNqRSbMW2D1&index=3&ab_channel=AmitavRoy )
+
+[(0:35)]( https://youtu.be/MA-9FdT4Pho?list=PLkZU2rKh1mT_AdjEO0kMTAiNqRSbMW2D1&t=35 )
+
+	php artisan key:generate
 
 [(3:09)]( https://youtu.be/MA-9FdT4Pho?list=PLkZU2rKh1mT_AdjEO0kMTAiNqRSbMW2D1&t=189 )
 
