@@ -25,108 +25,8 @@ Setting up elastic search container through Docker for Laravel
 	`git clone << >>`
 	
 	_+ Сut the contents of the folder up one level and delete the empty one._
-
-In Terminal:
-
-	cd /var/www/LARAVEL/Elasticsearch/elastic_amitavroy.loc
-	docker-compose up --build
-
-OR ( 
-_- IF you DO NOT need to rebuild the image, then use the command WITHOUT the "--build" option. Startup is much faster:_ )
-
-	docker-compose up	
-
----
-
-- Formation and filling of the database:
-
-Create a database in phpMyAdmin named, for example, elastic_amitavroy -> choose encoding - utf8mb4_general_ci.
-  
-	php artisan key:generate
-  
-`.env`:
-
-```
-APP_NAME=Docker_Laravel_Es
-...
-DB_HOST=db
-...
-DB_CONNECTION=mysql
-...
-DB_DATABASE=elastic_amitavroy
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
-```
-
-	cd /var/www/LARAVEL/Elasticsearch/elastic_amitavroy.loc
-	docker exec -it Docker_Laravel_Es_web bash
-	ls -l 
-
-_To check that the contents of the project are lit._
-
-	sudo chmod -R 777 /var/www/LARAVEL/Elasticsearch/elastic_amitavroy.loc
-
-	php artisan migrate
-
-	php artisan db:seed
-
----
-
-- For Testing the project:
- 
-`In Terminal`:
- 
-	cd /var/www/LARAVEL/Elasticsearch/elastic_amitavroy.loc	
-	docker-compose up --build
-	
-OR ( 
-_- IF you DO NOT need to rebuild the image, then use the command WITHOUT the "--build" option. Startup is much faster:_ )
-	
-	docker-compose up
- 
-`In Browser:`
 		
-	localhost:9000/	
-	
-	( - Laravel )
-
-_Every time the database is filled, the Faker class randomly generates data. - Insert your substring from the database( - instead of "Alberta" ) for search:_
-
-`routes/web.php`:
-
-```php
-use App\User;
-
-Route::get('/', function () {
-	return view('welcome');
-});
-
-Route::get('/users', function(){
-
-//$user = User::all();
-	
-User::reindex();
-$user = User::search('Alberta');	//id: 10
-	
-return $user;
-	
-});	
-```	
-
-	localhost:9000/users
-
-OR
-
-`In another Terminal:`
-
-	cd /var/www/LARAVEL/Elasticsearch/elastic_amitavroy.loc
-	docker exec -it Docker_Laravel_Es_web bash
-	
-	php artisan tinker	
-	>>>	
-	User::reindex();	
-	User::all();	
-	User::search('Alberta');
+	`composer install`
 
 ---
 
@@ -202,6 +102,117 @@ Error:
 _"proc_open(): fork failed - Cannot allocate memory"_	
 	
 <https://www.nicesnippets.com/blog/proc-open-fork-failed-cannot-allocate-memory-laravel-ubuntu>
+
+---
+
+- Formation and filling of the database:
+  	  
+`.env`:
+
+```
+APP_NAME=Docker_Laravel_Es
+...
+DB_HOST=db
+...
+DB_CONNECTION=mysql
+...
+DB_DATABASE=elastic_amitavroy
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+`In Terminal`:
+
+	cd /var/www/LARAVEL/Elasticsearch/elastic_amitavroy.loc
+	php artisan key:generate
+	sudo chmod -R 777 /var/www/LARAVEL/Elasticsearch/elastic_amitavroy.loc	
+	docker-compose up --build
+
+`In another Terminal:`
+
+	cd /var/www/LARAVEL/Elasticsearch/elastic_amitavroy.loc
+	
+	docker exec -it Docker_Laravel_Es_web bash
+	
+	ls -l 
+
+_To check that the contents of the project are lit._
+	
+	php artisan migrate
+
+	php artisan db:seed
+
+---
+
+- For Testing the project:
+ 
+`In Terminal:`
+ 
+	cd /var/www/LARAVEL/Elasticsearch/elastic_amitavroy.loc	
+	docker-compose up --build
+	
+OR ( 
+_- IF you DO NOT need to rebuild the image, then use the command WITHOUT the "--build" option. Startup is much faster:_ )
+	
+	docker-compose up
+ 
+`In another Terminal:`
+
+	cd /var/www/LARAVEL/Elasticsearch/elastic_amitavroy.loc
+	docker exec -it Docker_Laravel_Es_web bash
+	
+	php artisan tinker	
+	>>>	
+	User::reindex();	
+	User::all();			
+	User::search('Alberta'); 
+	
+_- Every time the database is filled, the Faker class randomly generates data. - Insert your substring from the database( - instead of "Alberta" ) for search:_	
+ 
+OR
+ 
+`In Browser:`
+		
+	localhost:9000/	
+	
+Error: 
+
+_"ErrorException (E_WARNING) "file_put_contents(/var/www/app/storage/framework/sessions/qRzhr9WVVcwjv87mNyHw6NS9nVYJwDbUkf5Hs7wC): failed to open stream: No such file or directory"_
+
+<https://stackoverflow.com/questions/38888568/laravel-file-put-contents-failed-to-open-stream-permission-denied-for-sessio>
+
+	//docker exec -it Docker_Laravel_Es_web bash	
+	php artisan config:cache
+
+	localhost:9000/	
+	
+	( - Laravel )
+
+
+_Every time the database is filled, the Faker class randomly generates data. - Insert your substring from the database( - instead of "Alberta" ) for search:_
+
+`routes/web.php`:
+
+```php
+use App\User;
+
+Route::get('/', function () {
+	return view('welcome');
+});
+
+Route::get('/users', function(){
+
+//$user = User::all();
+	
+User::reindex();
+$user = User::search('Alberta');	//id: 10
+	
+return $user;
+	
+});	
+```	
+
+	localhost:9000/users
 
 ---
 
@@ -347,8 +358,6 @@ _"proc_open(): fork failed - Cannot allocate memory"_
 	php artisan key:generate
 
 [(3:09)]( https://youtu.be/MA-9FdT4Pho?list=PLkZU2rKh1mT_AdjEO0kMTAiNqRSbMW2D1&t=189 )
-
-Create a database in phpMyAdmin: elastic_amitavroy - utf8mb4_general_ci					
 
 `.env`:
 
